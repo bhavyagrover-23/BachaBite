@@ -1,0 +1,2894 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BachaBite — Save food. Save money. | Bhookh bhi, Bachat bhi</title>
+  <style>
+    :root {
+      --saffron: #E85D04;
+      --saffron-dark: #C44300;
+      --saffron-light: #FFF4EC;
+      --turmeric: #F48C06;
+      --mango: #FFBA08;
+      --deep-green: #14532D;
+      --deep-green-dark: #0A321A;
+      --mint-light: #ECFDF5;
+      --cream: #FAF6F0;
+      --cream-card: #FFFFFF;
+      --ink: #22150C;
+      --ink-soft: #44342A;
+      --muted: #7E6F65;
+      --border: #E8DFD5;
+      --border-light: #F0E8DF;
+      --coral: #DC2626;
+      --gold-coin: linear-gradient(135deg, #FFE066 0%, #F59F00 50%, #D97706 100%);
+      --shadow-sm: 0 2px 6px rgba(34, 21, 12, 0.05);
+      --shadow-md: 0 10px 25px -4px rgba(34, 21, 12, 0.08), 0 4px 10px -2px rgba(34, 21, 12, 0.04);
+      --shadow-3d: 0 15px 35px -5px rgba(232, 93, 4, 0.15), 0 0 0 1px rgba(232, 93, 4, 0.05);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .brand-title, .punchline {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    button, input, select { font: inherit; outline: none; }
+    button { cursor: pointer; border: 0; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hide { display: none !important; }
+
+    /* 3D Coin Animation */
+    .coin-3d {
+      width: 28px;
+      height: 28px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: coinSpin 6s infinite linear;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .coin-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      color: #78350F;
+      background: var(--gold-coin);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), inset 0 -2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(217,119,6,0.4);
+      border: 1.5px solid #FDE68A;
+      backface-visibility: hidden;
+    }
+    .coin-back {
+      transform: rotateY(180deg);
+    }
+    @keyframes coinSpin {
+      0% { transform: perspective(300px) rotateY(0deg); }
+      70% { transform: perspective(300px) rotateY(0deg); }
+      85% { transform: perspective(300px) rotateY(180deg); }
+      100% { transform: perspective(300px) rotateY(360deg); }
+    }
+
+    /* 3D Button Utility */
+    .btn-3d {
+      position: relative;
+      background: var(--saffron);
+      color: white;
+      font-weight: 800;
+      border-radius: 12px;
+      padding: 12px 20px;
+      box-shadow: 0 5px 0 var(--saffron-dark), 0 8px 16px rgba(232, 93, 4, 0.3);
+      transform: translateY(0);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-3d:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 var(--saffron-dark), 0 12px 20px rgba(232, 93, 4, 0.35);
+      background: #f3650c;
+    }
+    .btn-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 var(--saffron-dark), 0 3px 6px rgba(232, 93, 4, 0.2);
+    }
+    .btn-3d.secondary {
+      background: #FFF;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 0 #D4C6B8;
+    }
+    .btn-3d.secondary:hover {
+      background: #FDFBF8;
+      box-shadow: 0 6px 0 #D4C6B8;
+    }
+    .btn-3d.secondary:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #D4C6B8;
+    }
+    .btn-3d.green {
+      background: var(--deep-green);
+      box-shadow: 0 5px 0 var(--deep-green-dark), 0 8px 16px rgba(20, 83, 45, 0.3);
+    }
+    .btn-3d.green:hover {
+      background: #196637;
+      box-shadow: 0 7px 0 var(--deep-green-dark);
+    }
+    .btn-3d.green:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 var(--deep-green-dark);
+    }
+
+    /* Top Announcement Ticker */
+    .ticker-wrap {
+      background: #1E120A;
+      color: #FFD480;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ticker-move {
+      display: inline-block;
+      animation: tickerScroll 32s linear infinite;
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-right: 32px;
+    }
+    .ticker-dot { color: var(--mango); font-size: 1.1rem; }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 246, 240, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px max(4vw, 20px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-logo-3d {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(140deg, var(--saffron) 0%, #C44300 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 6px 14px rgba(232, 93, 4, 0.35), inset 0 2px 4px rgba(255,255,255,0.4);
+      transform: perspective(400px) rotateY(-8deg) rotateX(6deg);
+      transition: transform 0.3s ease;
+    }
+    .brand-wrap:hover .brand-logo-3d {
+      transform: perspective(400px) rotateY(0deg) rotateX(0deg) scale(1.05);
+    }
+    .brand-title {
+      font-size: 1.55rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .brand-title span { color: var(--saffron); }
+    .brand-sub {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .location-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFF;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+    }
+    .location-pill:hover { border-color: var(--saffron); }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      background: rgba(232, 223, 213, 0.4);
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid rgba(232, 223, 213, 0.7);
+    }
+    nav button {
+      padding: 8px 14px;
+      background: transparent;
+      border-radius: 10px;
+      color: var(--ink-soft);
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    nav button:hover {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--saffron-dark);
+    }
+    nav button.active {
+      background: #FFF;
+      color: var(--saffron-dark);
+      box-shadow: 0 2px 8px rgba(34, 21, 12, 0.07);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Bachat Coin Balance Widget */
+    .bachat-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 1.5px solid #FDE68A;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-weight: 800;
+      font-size: 0.84rem;
+      color: #92400E;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .bachat-badge:hover {
+      transform: scale(1.04);
+    }
+
+    .orders-btn {
+      background: #FFF;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 750;
+      font-size: 0.84rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .orders-btn:hover {
+      border-color: var(--saffron);
+      background: var(--saffron-light);
+    }
+    .order-badge {
+      background: var(--saffron);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 99px;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1240px;
+      margin: auto;
+      padding: 24px max(4vw, 20px) 80px;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      background: radial-gradient(circle at 80% 20%, #FFF0DD 0%, #F5DEC2 50%, #EBD0B0 100%);
+      border: 2px solid #E4CCB0;
+      border-radius: 30px;
+      overflow: hidden;
+      padding: clamp(28px, 5vw, 60px);
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 32px;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 20px 45px -10px rgba(184, 112, 45, 0.15);
+      margin-bottom: 36px;
+    }
+    .hero-container::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(232, 93, 4, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFF;
+      border: 1px solid #EBD5BE;
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--saffron-dark);
+      box-shadow: 0 4px 10px rgba(232, 93, 4, 0.1);
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #1A1009;
+      margin: 0 0 16px;
+    }
+    .hero-title .desi-accent {
+      color: var(--saffron);
+      position: relative;
+      display: inline-block;
+    }
+    .hero-title .desi-accent::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 186, 8, 0.45);
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .hero-desc {
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: #554133;
+      max-width: 530px;
+      margin: 0 0 24px;
+    }
+    .hero-quote-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(8px);
+      border-left: 4px solid var(--saffron);
+      border-radius: 0 12px 12px 0;
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #2F1F15;
+      margin-bottom: 26px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    /* 3D Visual Art in Hero */
+    .hero-visual-3d {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+      perspective: 1000px;
+    }
+    .hero-card-perspective {
+      width: 100%;
+      max-width: 380px;
+      background: #FFF;
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(45, 26, 12, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.9);
+      transform: rotateY(-8deg) rotateX(6deg) translateY(0);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+      position: relative;
+    }
+    .hero-card-perspective:hover {
+      transform: rotateY(0deg) rotateX(0deg) translateY(-8px);
+      box-shadow: 0 32px 60px -15px rgba(232, 93, 4, 0.3);
+    }
+    .hero-img-wrap {
+      height: 230px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .hero-card-perspective:hover .hero-img-wrap img {
+      transform: scale(1.06);
+    }
+    .hero-float-badge {
+      position: absolute;
+      z-index: 10;
+      background: #FFF;
+      border-radius: 16px;
+      padding: 10px 14px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      animation: floatBadge 4s ease-in-out infinite alternate;
+    }
+    .float-top-left {
+      top: -18px;
+      left: -20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation-delay: 0s;
+    }
+    .float-bottom-right {
+      bottom: -15px;
+      right: -15px;
+      animation-delay: 1.8s;
+      background: var(--deep-green);
+      color: white;
+    }
+    @keyframes floatBadge {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    /* 7 PM Saver Drops Countdown Banner */
+    .drop-banner {
+      background: linear-gradient(110deg, #1C120B 0%, #2E1B0E 50%, #170E08 100%);
+      color: white;
+      border-radius: 20px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 14px 30px rgba(28, 18, 11, 0.2);
+      margin-bottom: 32px;
+      border: 1px solid #452A18;
+      position: relative;
+      overflow: hidden;
+    }
+    .drop-banner::after {
+      content: "⏰ 7:00 PM DAILY DROP";
+      position: absolute;
+      right: -20px;
+      bottom: -10px;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+      font-family: 'Outfit';
+    }
+    .drop-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .drop-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--turmeric) 0%, var(--saffron) 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      box-shadow: 0 6px 14px rgba(232, 93, 4, 0.4);
+    }
+    .drop-timer-block {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+    }
+    .timer-segment {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--mango);
+      min-width: 42px;
+      text-align: center;
+    }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin: 40px 0 20px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .section-head .punch-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #FFF;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 8px;
+      color: var(--saffron-dark);
+    }
+
+    /* Filter & Search Bar */
+    .filter-sticky-bar {
+      background: #FFF;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .filter-primary-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #FDFBF9;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--saffron);
+      background: #FFF;
+      box-shadow: 0 0 0 3px rgba(232, 93, 4, 0.12);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .filter-select {
+      border: 1.5px solid var(--border);
+      background: #FDFBF9;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+    }
+    .filter-select:focus {
+      border-color: var(--saffron);
+    }
+
+    /* Preference Filter Pills */
+    .preference-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .preference-scroll::-webkit-scrollbar { display: none; }
+    .chip {
+      white-space: nowrap;
+      padding: 7px 14px;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      font-weight: 750;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .chip:hover {
+      background: #FFF;
+      border-color: var(--saffron);
+      color: var(--saffron-dark);
+    }
+    .chip.active {
+      background: var(--ink);
+      color: #FFF;
+      border-color: var(--ink);
+    }
+    .chip.highlight {
+      background: #FFF7ED;
+      border-color: #FDBA74;
+      color: #C2410C;
+    }
+    .chip.highlight.active {
+      background: var(--saffron);
+      color: white;
+      border-color: var(--saffron);
+    }
+
+    /* 3D Food Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    /* Interactive 3D Card */
+    .food-card {
+      background: #FFF;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+    .food-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 35px -10px rgba(34, 21, 12, 0.12), 0 0 0 1px rgba(232, 93, 4, 0.2);
+      border-color: #F8D1AE;
+    }
+
+    .card-media {
+      height: 185px;
+      position: relative;
+      overflow: hidden;
+      background: #F3ECE2;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .food-card:hover .card-media img {
+      transform: scale(1.05);
+    }
+    .badge-bhookh {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(18, 10, 5, 0.88);
+      backdrop-filter: blur(8px);
+      color: #FFF;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 5px 9px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 2;
+    }
+    .badge-discount-3d {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: var(--coral);
+      color: #FFF;
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 4px 9px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+      letter-spacing: -0.01em;
+      z-index: 2;
+    }
+    .fav-heart-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #9E9188;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .fav-heart-btn:hover {
+      transform: scale(1.15);
+      color: #E11D48;
+    }
+    .fav-heart-btn.active {
+      color: #E11D48;
+      background: #FFF;
+    }
+
+    .card-content {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .dukaan-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .dukaan-name {
+      font-weight: 700;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #FEF3C7;
+      color: #92400E;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .item-title {
+      font-size: 1.22rem;
+      font-weight: 800;
+      margin: 2px 0 6px;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .item-quote {
+      font-size: 0.78rem;
+      color: #92400E;
+      background: #FFFBEB;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      display: inline-block;
+      width: fit-content;
+    }
+    .price-savings-box {
+      background: #FDF9F3;
+      border: 1px dashed #E5D5C5;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price-current {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--saffron-dark);
+      font-family: 'Outfit';
+    }
+    .price-original {
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      margin-left: 4px;
+    }
+    .savings-badge {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--deep-green);
+      background: #DCFCE7;
+      padding: 4px 8px;
+      border-radius: 6px;
+      text-align: right;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .pickup-timer {
+      color: #B91C1C;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .whatsapp-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #25D366;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 0 #1B9A4A, 0 6px 12px rgba(37, 211, 102, 0.25);
+    }
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #1B9A4A;
+    }
+    .whatsapp-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #1B9A4A;
+    }
+
+    /* Rescue Boxes Special Section */
+    .rescue-section-box {
+      background: linear-gradient(135deg, #FFF9F2 0%, #FFF3E5 100%);
+      border: 2px solid #FED7AA;
+      border-radius: 28px;
+      padding: 30px;
+      margin: 48px 0;
+      position: relative;
+    }
+    .rescue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .rescue-card {
+      background: #FFF;
+      border-radius: 20px;
+      padding: 18px;
+      border: 1.5px solid #FCD34D;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.12);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .rescue-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 28px rgba(245, 158, 11, 0.2);
+    }
+    .rescue-tape {
+      position: absolute;
+      top: 14px;
+      right: -32px;
+      background: #F59E0B;
+      color: #FFF;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 36px;
+      transform: rotate(45deg);
+      letter-spacing: 0.05em;
+    }
+
+    /* Favourite Dukaans Row */
+    .dukaan-scroll {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .dukaan-card {
+      background: #FFF;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .dukaan-card:hover {
+      border-color: var(--saffron);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .dukaan-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      background: #FFF3E6;
+      border: 2px solid #FBD0A2;
+    }
+
+    /* How It Works (3 Steps) */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 28px 0;
+    }
+    .step-card {
+      background: #FFF;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .step-number-3d {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--saffron) 0%, var(--turmeric) 100%);
+      color: white;
+      font-family: 'Outfit';
+      font-weight: 900;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(232, 93, 4, 0.35);
+      margin-bottom: 16px;
+    }
+
+    /* Rewards / BYOC / Points Section */
+    .perks-panel {
+      background: linear-gradient(135deg, #0C3E22 0%, #155724 100%);
+      color: white;
+      border-radius: 26px;
+      padding: clamp(24px, 4vw, 40px);
+      margin: 40px 0;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+      box-shadow: 0 20px 40px -10px rgba(21, 87, 36, 0.3);
+    }
+    .points-progress-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 18px;
+      padding: 20px;
+    }
+    .progress-track {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FDE68A 0%, #F59E0B 100%);
+      border-radius: 99px;
+      width: 60%;
+      transition: width 0.5s ease;
+    }
+
+    /* Partner Tab */
+    .partner-hero {
+      background: #1C1510;
+      color: white;
+      border-radius: 24px;
+      padding: 36px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .partner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .panel-card {
+      background: #FFF;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 750;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #FDFBF8;
+      font-size: 0.92rem;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--saffron);
+      background: #FFF;
+    }
+
+    /* Impact Metrics */
+    .impact-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .impact-metric-card {
+      background: #FFF;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .impact-metric-card .big-num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--saffron);
+      font-family: 'Outfit';
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    /* Modals & Drawers */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(22, 13, 7, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-box {
+      background: #FFF;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .modal-backdrop.open .modal-box {
+      transform: scale(1);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #F3ECE2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--ink-soft);
+      transition: background 0.2s;
+    }
+    .modal-close-btn:hover { background: #E5DACB; }
+
+    /* Pickup Confirmation Ticket Card (3D Feel) */
+    .ticket-3d {
+      background: linear-gradient(135deg, #FFFDFB 0%, #FFF5EC 100%);
+      border: 2px dashed #F59E0B;
+      border-radius: 20px;
+      padding: 22px;
+      margin: 18px 0;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15);
+    }
+    .pickup-code-display {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: var(--saffron-dark);
+      font-family: 'Outfit';
+      margin: 8px 0;
+      user-select: all;
+    }
+    .qr-container {
+      width: 150px;
+      height: 150px;
+      margin: 12px auto;
+      background: white;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Toast Notification */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1C120A;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 99px;
+      font-size: 0.9rem;
+      font-weight: 750;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toast-box.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Mobile Bottom Navigation */
+    @media (max-width: 820px) {
+      .hero-container { grid-template-columns: 1fr; }
+      .hero-visual-3d { min-height: 280px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .perks-panel { grid-template-columns: 1fr; }
+      .partner-grid { grid-template-columns: 1fr; }
+      .impact-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      header { padding: 10px 16px; }
+      nav { display: none; }
+      .mobile-nav-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-around;
+        padding: 8px 12px;
+        z-index: 500;
+      }
+      .mobile-nav-bottom button {
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        font-size: 0.72rem;
+        font-weight: 750;
+        color: var(--muted);
+        padding: 4px 8px;
+        border-radius: 8px;
+      }
+      .mobile-nav-bottom button.active {
+        color: var(--saffron-dark);
+      }
+      main { padding-bottom: 90px; }
+    }
+    @media (min-width: 821px) {
+      .mobile-nav-bottom { display: none; }
+    }
+  
+  /* Simple styling for the BachaBite college project */
+  :root {
+    --saffron: #28734b;
+    --saffron-dark: #205b3c;
+    --saffron-light: #eaf3ed;
+    --turmeric: #5b946f;
+    --mango: #dcebdd;
+    --deep-green: #205b3c;
+    --deep-green-dark: #17452d;
+    --mint-light: #eef6f0;
+    --cream: #f5f7f5;
+    --cream-card: #ffffff;
+    --ink: #202820;
+    --ink-soft: #465148;
+    --muted: #68736b;
+    --border: #dce4dd;
+    --border-light: #e8eee9;
+    --coral: #b94b42;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --gold-coin: #e7c75a;
+  }
+
+  * { box-shadow: none !important; text-shadow: none !important; }
+  body {
+    background: #f5f7f5 !important;
+    color: #202820 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, .brand-title, .hero-title {
+    font-family: Arial, Helvetica, sans-serif !important;
+    letter-spacing: normal !important;
+  }
+  .ticker-wrap {
+    background: #205b3c !important;
+    overflow: hidden;
+  }
+  .ticker-move {
+    animation: none !important;
+    transform: none !important;
+  }
+  .ticker-item { color: #fff !important; }
+  header {
+    background: #fff !important;
+    border-bottom: 1px solid #dce4dd !important;
+    box-shadow: none !important;
+  }
+  .brand-logo-3d, .coin-3d, .hero-card-perspective,
+  .hero-visual-3d, .btn-3d, .food-card,
+  .bachat-badge, .location-pill, .orders-btn {
+    transform: none !important;
+    filter: none !important;
+  }
+  .brand-logo-3d {
+    border-radius: 8px !important;
+    background: #eaf3ed !important;
+  }
+  .brand-title { font-weight: 700 !important; }
+  .brand-title span { color: #28734b !important; }
+  .nav-btn {
+    border-radius: 6px !important;
+    box-shadow: none !important;
+  }
+  .nav-btn.active, .nav-btn:hover {
+    background: #eaf3ed !important;
+    color: #205b3c !important;
+  }
+  .hero-container {
+    background: #eaf3ed !important;
+    border: 1px solid #dce4dd !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3.2rem) !important;
+    line-height: 1.15 !important;
+    font-weight: 700 !important;
+  }
+  .desi-accent { color: #28734b !important; }
+  .hero-eyebrow, .hero-quote-box {
+    box-shadow: none !important;
+    border-radius: 6px !important;
+  }
+  .hero-quote-box { background: #fff !important; }
+  .btn-3d, button {
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: background-color .15s ease !important;
+  }
+  .btn-3d {
+    background: #28734b !important;
+    color: #fff !important;
+    border: 1px solid #28734b !important;
+  }
+  .btn-3d:hover { background: #205b3c !important; }
+  .btn-3d.secondary {
+    background: #fff !important;
+    color: #205b3c !important;
+    border: 1px solid #b9cbbd !important;
+  }
+  .food-card, .card, .stat-card, .impact-card, .partner-card,
+  .modal-content, .filter-panel, .rescue-card {
+    background: #fff !important;
+    border: 1px solid #dce4dd !important;
+    border-radius: 8px !important;
+  }
+  .food-card:hover, .card:hover { transform: none !important; }
+  input, select, textarea {
+    border: 1px solid #cbd7cd !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    font: inherit !important;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: 2px solid #b7d5bf !important;
+    outline-offset: 1px;
+  }
+  .toast-box { border-radius: 6px !important; }
+  footer { color: #68736b !important; }
+  [class*="3d"], [class*="glow"], [class*="gradient"] {
+    animation: none !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Ticker with Desi Punchlines -->
+  <div class="ticker-wrap">
+    <div class="ticker-move">
+      <div class="ticker-item"><span class="ticker-dot">●</span> <strong>Bhookh bhi, bachat bhi!</strong> Rescue fresh meals at up to 70% off.</div>
+      <div class="ticker-item"><span class="ticker-dot">●</span> “Your wallet and the planet both approve.” 🌍</div>
+      <div class="ticker-item"><span class="ticker-dot">●</span> ⏰ <strong>Next 7 PM Saver Drop</strong> dropping in 52 dukaans near you!</div>
+      <div class="ticker-item"><span class="ticker-dot">●</span> “This food is too tasty for the bin.” 🥟</div>
+      <div class="ticker-item"><span class="ticker-dot">●</span> Bring your own container (BYOC) & earn <strong>+25 Bachat Coins</strong>! 🥣</div>
+      <div class="ticker-item"><span class="ticker-dot">●</span> “Your late-night hunger just found a budget.” 🌙</div>
+      <div class="ticker-item"><span class="ticker-dot">●</span> Paisa vasool, food rescue! 💰</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <a href="#home" class="brand-wrap" onclick="switchPage('home')">
+        <div class="brand-logo-3d">🍲</div>
+        <div>
+          <div class="brand-title">Bacha<span>Bite</span></div>
+          <span class="brand-sub">Khaana Bachao · Paise Bachao</span>
+        </div>
+      </a>
+      <div class="location-pill" onclick="showToast('📍 Switched to North Campus & Civil Lines')">
+        <span>📍</span> <span id="currentLoc">North Campus, Delhi</span> ▾
+      </div>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav>
+      <button class="nav-btn active" data-page="home" onclick="switchPage('home')">
+        <span>🥘</span> Find Food
+      </button>
+      <button class="nav-btn" data-page="deals" onclick="scrollToDeals()">
+        <span>🔥</span> Aaj Ka Deal
+      </button>
+      <button class="nav-btn" data-page="under99" onclick="filterUnder99()">
+        <span>🏷️</span> Under ₹99
+      </button>
+      <button class="nav-btn" data-page="rescue" onclick="scrollToRescue()">
+        <span>🎁</span> Rescue Box
+      </button>
+      <button class="nav-btn" data-page="partner" onclick="switchPage('partner')">
+        <span>🏪</span> For Dukaans
+      </button>
+      <button class="nav-btn" data-page="impact" onclick="switchPage('impact')">
+        <span>🌱</span> Our Impact
+      </button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- 3D Bachat Coin Badge -->
+      <div class="bachat-badge" onclick="openPointsModal()" title="Click to view Bachat Rewards">
+        <div class="coin-3d">
+          <div class="coin-face">₹</div>
+          <div class="coin-face coin-back">★</div>
+        </div>
+        <span id="headerCoinCount">120</span> <span style="font-weight:600;font-size:0.76rem">Coins</span>
+      </div>
+
+      <!-- My Active Pickups -->
+      <button class="orders-btn" onclick="openOrdersModal()">
+        <span>🛍️</span> My Pickups <span class="order-badge" id="orderCountBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Pages -->
+  <main>
+
+    <!-- PAGE 1: HOME / CUSTOMER MARKETPLACE -->
+    <section id="homePage" class="page-section">
+      
+      <!-- Hero Section -->
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span>✨</span> <strong>Bhookh bhi, bachat bhi</strong> · Fresh rescue meals
+          </div>
+          <h1 class="hero-title">
+            Good food. Lower prices. Less waste.
+          </h1>
+          <p class="hero-desc">
+            Find extra food from nearby shops and canteens at lower prices. Pick it up before the shop closes.
+          </p>
+
+          <div class="hero-quote-box">
+            <span>💡</span> “Find a meal that fits your budget.”
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn-3d" onclick="filterUnder99()">
+              <span>🏷️</span> ₹99 Mein Kya Milega?
+            </button>
+            <button class="btn-3d secondary" onclick="scrollToRescue()">
+              <span>🎁</span> Chai-Time Rescue Boxes
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Card Visual Showcase -->
+        <div class="hero-visual-3d">
+          <div class="hero-card-perspective">
+            <div class="hero-img-wrap">
+              <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80" alt="Hot Samosa & Masala Chai Combo" loading="lazy" />
+            </div>
+            <div style="padding: 16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span class="rating-badge">★ 4.9 FSSAI Safe</span>
+                <span style="font-size:0.75rem;color:var(--muted);font-weight:700">0.4 km away</span>
+              </div>
+              <strong style="font-size:1.15rem;display:block">Samosa & Kulhad Chai Combo</strong>
+              <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px">
+                <span style="font-size:1.4rem;font-weight:900;color:var(--saffron)">₹49</span>
+                <del style="color:var(--muted);font-size:0.9rem">₹120</del>
+                <span class="savings-badge">Aapne ₹71 bachaye! (59% OFF)</span>
+              </div>
+            </div>
+
+            <!-- Floating 3D Pills -->
+            <div class="hero-float-badge float-top-left">
+              <span>🔥</span> <strong>Too tasty to waste!</strong>
+            </div>
+            <div class="hero-float-badge float-bottom-right">
+              <span>🪙</span> <strong>+25 Bachat Coins</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 PM Daily Saver Drops Countdown -->
+      <div class="drop-banner">
+        <div class="drop-info">
+          <div class="drop-icon">⚡</div>
+          <div>
+            <div style="font-weight:800;font-size:1.15rem;letter-spacing:-0.02em">Daily 7:00 PM Saver Drops</div>
+            <div style="font-size:0.85rem;color:#D8B496">Local bakeries & dukaans unlock evening surplus at steep discounts.</div>
+          </div>
+        </div>
+        <div class="drop-timer-block">
+          <div>
+            <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:#A89282;text-align:center">Next Drop In</div>
+            <div style="display:flex;gap:4px;margin-top:4px">
+              <div class="timer-segment" id="dropHrs">02</div>:
+              <div class="timer-segment" id="dropMins">34</div>:
+              <div class="timer-segment" id="dropSecs">19</div>
+            </div>
+          </div>
+          <button class="btn-3d" style="padding:9px 14px;font-size:0.8rem;background:var(--turmeric)" onclick="toggleDropAlert()">
+            🔔 Set Alert
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="filter-sticky-bar" id="dealsFilterSection">
+        <div class="filter-primary-row">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input id="searchInput" placeholder="Search samosa, biryani, bakery, roll or dukaan..." oninput="filterAndRenderCards()" />
+          </div>
+          <select id="priceSelect" class="filter-select" onchange="filterAndRenderCards()">
+            <option value="all">Any Price</option>
+            <option value="99">Under ₹99 (Student Special)</option>
+            <option value="150">Under ₹150</option>
+            <option value="200">Under ₹200</option>
+          </select>
+          <select id="sortSelect" class="filter-select" onchange="filterAndRenderCards()">
+            <option value="near">📍 Nearest First</option>
+            <option value="saving">💰 Highest Savings</option>
+            <option value="low">₹ Lowest Price</option>
+            <option value="time">⏰ Closing Soon</option>
+          </select>
+        </div>
+
+        <!-- Food Preference Chips -->
+        <div class="preference-scroll">
+          <button class="chip active" data-pref="all" onclick="setPreference('all', this)">✨ All Delights</button>
+          <button class="chip highlight" data-pref="under99" onclick="setPreference('under99', this)">🏷️ Under ₹99 Mein Kya Milega</button>
+          <button class="chip" data-pref="veg" onclick="setPreference('veg', this)">🟢 Pure Veg</button>
+          <button class="chip" data-pref="nonveg" onclick="setPreference('nonveg', this)">🔴 Non-Veg</button>
+          <button class="chip" data-pref="bakery" onclick="setPreference('bakery', this)">🥐 Fresh Bakery</button>
+          <button class="chip" data-pref="jain" onclick="setPreference('jain', this)">🌿 Jain Safe</button>
+          <button class="chip" data-pref="spicy" onclick="setPreference('spicy', this)">🌶️ Desi Spicy</button>
+        </div>
+      </div>
+
+      <!-- Section: Aaj Ka Deal (Featured Deals) -->
+      <div class="section-head" id="aajKaDealHead">
+        <div>
+          <h2><span>🔥</span> Aaj Ka Deal</h2>
+          <p>Today's deepest discounts. Freshly packed, ready for quick pickup.</p>
+        </div>
+        <div class="punch-tag">“Hot deal. Cooler bill.”</div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div id="foodCardsGrid" class="cards-grid"></div>
+
+      <!-- Section: Rescue Box (Mystery Surplus Box) -->
+      <div class="rescue-section-box" id="rescueBoxSection">
+        <div class="section-head" style="margin-top:0">
+          <div>
+            <h2><span>🎁</span> Mystery Rescue Boxes</h2>
+            <p>You choose the category, dukaan packs the delicious surprise variety. Extra 65% Bachat!</p>
+          </div>
+          <div class="punch-tag">“Grab it before someone else gets hungry.”</div>
+        </div>
+
+        <div class="rescue-grid">
+          <!-- Box 1 -->
+          <div class="rescue-card">
+            <span class="rescue-tape">SURPRISE</span>
+            <div style="font-size:2.4rem;margin-bottom:10px">🥐☕</div>
+            <h3 style="margin:0 0 4px;font-size:1.15rem">Chai-Time Bakery Box</h3>
+            <p style="font-size:0.8rem;color:var(--muted);margin:0 0 12px">Contains 3-4 fresh baked pastries, puffs or croissants from evening batch.</p>
+            <div class="price-savings-box">
+              <div>
+                <span class="price-current">₹69</span>
+                <del class="price-original">₹190</del>
+              </div>
+              <span class="savings-badge">Bachaye ₹121</span>
+            </div>
+            <button class="btn-3d green" style="width:100%;font-size:0.88rem" onclick="reserveCustomBox('Chai-Time Bakery Box', 'The Daily Bake House', 69, 190, '🥐')">
+              Claim Bakery Box
+            </button>
+          </div>
+
+          <!-- Box 2 -->
+          <div class="rescue-card">
+            <span class="rescue-tape">STUDENT FAV</span>
+            <div style="font-size:2.4rem;margin-bottom:10px">🍱🍲</div>
+            <h3 style="margin:0 0 4px;font-size:1.15rem">Campus Midnight Feast Box</h3>
+            <p style="font-size:0.8rem;color:var(--muted);margin:0 0 12px">Wholesome tiffin meal: Rice bowl / roti roll with curry & sweet treat.</p>
+            <div class="price-savings-box">
+              <div>
+                <span class="price-current">₹89</span>
+                <del class="price-original">₹240</del>
+              </div>
+              <span class="savings-badge">Bachaye ₹151</span>
+            </div>
+            <button class="btn-3d green" style="width:100%;font-size:0.88rem" onclick="reserveCustomBox('Campus Midnight Feast Box', 'Campus Central Canteen', 89, 240, '🍱')">
+              Claim Campus Box
+            </button>
+          </div>
+
+          <!-- Box 3 -->
+          <div class="rescue-card">
+            <span class="rescue-tape">DESI SNACK</span>
+            <div style="font-size:2.4rem;margin-bottom:10px">🥟🫓</div>
+            <h3 style="margin:0 0 4px;font-size:1.15rem">Halwai Shaam Ki Chai Box</h3>
+            <p style="font-size:0.8rem;color:var(--muted);margin:0 0 12px">Mix of hot samosas, kachori, dhokla and gulab jamun sweet pack.</p>
+            <div class="price-savings-box">
+              <div>
+                <span class="price-current">₹59</span>
+                <del class="price-original">₹160</del>
+              </div>
+              <span class="savings-badge">Bachaye ₹101</span>
+            </div>
+            <button class="btn-3d green" style="width:100%;font-size:0.88rem" onclick="reserveCustomBox('Halwai Shaam Box', 'Bikaner Sweet Corner', 59, 160, '🥟')">
+              Claim Snack Box
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Favourite Dukaan Section -->
+      <div class="section-head">
+        <div>
+          <h2><span>❤️</span> Favourite Dukaans & Canteens</h2>
+          <p>Follow your go-to spots. Get instant WhatsApp / app alerts when they drop surplus.</p>
+        </div>
+        <div class="punch-tag">“Apni favourite dukaan follow karo”</div>
+      </div>
+
+      <div class="dukaan-scroll">
+        <div class="dukaan-card">
+          <div class="dukaan-avatar">☕</div>
+          <strong style="font-size:0.95rem;display:block">Chai Shai & Bakery</strong>
+          <div style="font-size:0.75rem;color:var(--muted);margin:3px 0 10px">North Campus · 4.9 ★ (420+ rescues)</div>
+          <button class="btn-3d secondary" style="width:100%;padding:7px;font-size:0.8rem" onclick="toggleFollowDukaan('Chai Shai & Bakery', this)">
+            ❤️ Follow
+          </button>
+        </div>
+        <div class="dukaan-card">
+          <div class="dukaan-avatar">🥘</div>
+          <strong style="font-size:0.95rem;display:block">Amritsari Kulcha Corner</strong>
+          <div style="font-size:0.75rem;color:var(--muted);margin:3px 0 10px">Hudson Lane · 4.8 ★ (890+ rescues)</div>
+          <button class="btn-3d secondary" style="width:100%;padding:7px;font-size:0.8rem" onclick="toggleFollowDukaan('Amritsari Kulcha Corner', this)">
+            ❤️ Follow
+          </button>
+        </div>
+        <div class="dukaan-card">
+          <div class="dukaan-avatar">🍛</div>
+          <strong style="font-size:0.95rem;display:block">Royal Dum Biryani</strong>
+          <div style="font-size:0.75rem;color:var(--muted);margin:3px 0 10px">Kamla Nagar · 4.7 ★ (610+ rescues)</div>
+          <button class="btn-3d secondary" style="width:100%;padding:7px;font-size:0.8rem" onclick="toggleFollowDukaan('Royal Dum Biryani', this)">
+            ❤️ Follow
+          </button>
+        </div>
+        <div class="dukaan-card">
+          <div class="dukaan-avatar">🥪</div>
+          <strong style="font-size:0.95rem;display:block">Campus Central Canteen</strong>
+          <div style="font-size:0.75rem;color:var(--muted);margin:3px 0 10px">College Block A · 4.9 ★ (1,150+ rescues)</div>
+          <button class="btn-3d secondary" style="width:100%;padding:7px;font-size:0.8rem" onclick="toggleFollowDukaan('Campus Central Canteen', this)">
+            ❤️ Follow
+          </button>
+        </div>
+      </div>
+
+      <!-- Perks / Gamification / BYOC Section -->
+      <div class="perks-panel">
+        <div>
+          <span style="background:rgba(255,255,255,0.15);padding:4px 12px;border-radius:99px;font-size:0.78rem;font-weight:800;letter-spacing:0.05em">
+            🥣 ECO-BACHAT REWARDS
+          </span>
+          <h2 style="font-size:2rem;color:white;margin:12px 0 8px">Bring Your Own Dabba. Earn Extra Coins.</h2>
+          <p style="color:#C6F6D5;font-size:0.95rem;line-height:1.6;margin:0 0 18px">
+            Help cut single-use plastic takeaway boxes! Tick the <strong>"BYOC (Bring Your Own Container)"</strong> option at reservation to instantly unlock <strong>+25 Bachat Coins</strong> and save an extra ₹5 on platform fee.
+          </p>
+          <div style="display:flex;gap:14px;align-items:center">
+            <div style="background:rgba(255,255,255,0.15);padding:10px 16px;border-radius:12px;display:flex;align-items:center;gap:10px">
+              <span style="font-size:1.8rem">🌱</span>
+              <div>
+                <strong style="display:block;font-size:0.9rem">Plastic-Free Hero</strong>
+                <span style="font-size:0.75rem;color:#A7F3D0">350+ kg plastic boxes saved</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="points-progress-box">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong>Pickup Loyalty Goal</strong>
+            <span style="font-size:0.85rem;color:#FEF08A">3 / 5 Pickups Done</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <p style="font-size:0.8rem;color:#E2E8F0;margin:6px 0 14px">
+            Complete 2 more pickups to unlock an instant <strong>₹20 Cash Voucher</strong> on your next order!
+          </p>
+          <button class="btn-3d" style="width:100%;font-size:0.85rem;background:var(--turmeric)" onclick="openPointsModal()">
+            View Bachat Rewards
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Steps: How It Works -->
+      <div class="section-head">
+        <div>
+          <h2><span>⚡</span> How BachaBite Works</h2>
+          <p>Simple, safe, and pocket-friendly in 3 quick steps.</p>
+        </div>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number-3d">1</div>
+          <h3 style="margin:0 0 6px">Discover Today's Deal</h3>
+          <p style="color:var(--muted);font-size:0.88rem;margin:0">Nearby bakeries and canteens post unserved fresh food before their shift ends.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number-3d">2</div>
+          <h3 style="margin:0 0 6px">Reserve in Seconds</h3>
+          <p style="color:var(--muted);font-size:0.88rem;margin:0">Lock your portion with 1 click. Pay online via UPI or choose Cash at Pickup.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number-3d">3</div>
+          <h3 style="margin:0 0 6px">Pickup with Secret Code</h3>
+          <p style="color:var(--muted);font-size:0.88rem;margin:0">Show your 6-digit code or QR at the counter before the deadline. Enjoy!</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PAGE 2: PARTNER DASHBOARD -->
+    <section id="partnerPage" class="page-section hide">
+      <div class="partner-hero">
+        <div>
+          <div style="font-size:0.85rem;color:var(--mango);font-weight:800;letter-spacing:0.05em">🏪 DUKAAN & RESTAURANT PORTAL</div>
+          <h1 style="font-size:2.2rem;margin:8px 0;letter-spacing:-0.03em">Recover Revenue. Prevent Food Waste.</h1>
+          <p style="color:#D6C4B8;max-width:550px;margin:0;font-size:0.95rem">
+            Publish your day's surplus in under 45 seconds. Hundreds of hungry students and neighbors collect it before closing time.
+          </p>
+        </div>
+        <button class="btn-3d" onclick="showToast('📥 Downloading Weekly Revenue & Food Rescue Statement...')">
+          📄 Download Weekly Report
+        </button>
+      </div>
+
+      <div class="partner-grid">
+        <!-- New Listing Form -->
+        <div class="panel-card">
+          <h3 style="margin:0 0 4px;font-size:1.3rem">⚡ Quick Food Listing</h3>
+          <p style="font-size:0.82rem;color:var(--muted);margin:0 0 18px">Only list fresh, safe food packed before closing.</p>
+
+          <form id="partnerFoodForm" onsubmit="handlePartnerSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Food Item Name</label>
+                <input required id="pName" placeholder="e.g. Paneer Butter Thali" />
+              </div>
+              <div class="form-group">
+                <label>Food Category</label>
+                <select id="pType">
+                  <option value="veg">🟢 Vegetarian</option>
+                  <option value="nonveg">🔴 Non-vegetarian</option>
+                  <option value="bakery">🥐 Bakery</option>
+                  <option value="jain">🌿 Jain Safe</option>
+                  <option value="spicy">🌶️ Desi Spicy</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Quantity Available</label>
+                <input required id="pQty" type="number" min="1" value="5" />
+              </div>
+              <div class="form-group">
+                <label>Pickup Deadline</label>
+                <input required id="pTime" type="time" value="21:30" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Original Menu Price ₹</label>
+                <input required id="pOrig" type="number" min="10" value="160" />
+              </div>
+              <div class="form-group">
+                <label>BachaBite Discount Price ₹</label>
+                <input required id="pPrice" type="number" min="10" value="69" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:14px">
+              <label>Select Photo Style</label>
+              <select id="pImageChoice">
+                <option value="samosa">🥟 Samosa & Chai</option>
+                <option value="biryani">🍲 Dum Biryani Bowl</option>
+                <option value="dosa">🥞 Crispy Masala Dosa</option>
+                <option value="roll">🌯 Paneer / Chicken Roll</option>
+                <option value="bakery">🥐 Pastry & Bakery Box</option>
+                <option value="thali">🍱 North Indian Thali</option>
+                <option value="pizza">🍕 Cheesy Pizza Slice</option>
+              </select>
+            </div>
+
+            <label style="display:flex;align-items:flex-start;gap:8px;font-size:0.8rem;color:var(--ink-soft);margin-bottom:18px;cursor:pointer">
+              <input type="checkbox" required checked style="margin-top:3px" />
+              <span>I certify that this food is freshly prepared today, safely packaged, and has not been served to customers.</span>
+            </label>
+
+            <button type="submit" class="btn-3d" style="width:100%">
+              🚀 Publish Listing Live
+            </button>
+          </form>
+        </div>
+
+        <!-- Live Inventory & Analytics -->
+        <div>
+          <div class="panel-card" style="margin-bottom:20px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-size:0.8rem;color:var(--muted);font-weight:700">RECOVERED REVENUE THIS WEEK</div>
+                <div style="font-size:2.3rem;font-weight:900;color:var(--saffron-dark);font-family:'Outfit'">₹3,840</div>
+              </div>
+              <div style="width:52px;height:52px;background:#FFF3E6;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px">
+                📈
+              </div>
+            </div>
+            
+            <div style="background:#FEF3C7;border-left:4px solid #F59E0B;padding:12px;border-radius:8px;margin-top:16px;font-size:0.85rem">
+              <strong>💡 AI Demand Tip:</strong> Your samosa & roll waste is highest on Mondays after 5 PM. Try preparing 15% smaller batches tomorrow or drop deals early at 6 PM!
+            </div>
+          </div>
+
+          <!-- Active Listings -->
+          <div class="panel-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <h3 style="margin:0;font-size:1.2rem">Live Active Listings</h3>
+              <span class="savings-badge" id="partnerLiveCount">0 Live</span>
+            </div>
+            <div id="partnerListingsList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: OUR IMPACT -->
+    <section id="impactPage" class="page-section hide">
+      <div class="section-head">
+        <div>
+          <h2><span>🌱</span> Real Impact, Every Single Pickup</h2>
+          <p>Together with students and local dukaans, we turn potential waste into smiles and savings.</p>
+        </div>
+        <div class="punch-tag">“Paise bachao, khaana bachao”</div>
+      </div>
+
+      <div class="impact-metrics-grid">
+        <div class="impact-metric-card">
+          <div class="big-num">1,480+</div>
+          <strong style="display:block;font-size:0.92rem">Fresh Meals Rescued</strong>
+          <span style="font-size:0.78rem;color:var(--muted)">from going into bins</span>
+        </div>
+        <div class="impact-metric-card">
+          <div class="big-num">410 kg</div>
+          <strong style="display:block;font-size:0.92rem">Food Waste Prevented</strong>
+          <span style="font-size:0.78rem;color:var(--muted)">equivalent to 1.1 tonnes CO2e</span>
+        </div>
+        <div class="impact-metric-card">
+          <div class="big-num">₹68,500</div>
+          <strong style="display:block;font-size:0.92rem">Student & Customer Savings</strong>
+          <span style="font-size:0.78rem;color:var(--muted)">money kept in your wallet</span>
+        </div>
+        <div class="impact-metric-card">
+          <div class="big-num">135+</div>
+          <strong style="display:block;font-size:0.92rem">Local Dukaans Supported</strong>
+          <span style="font-size:0.78rem;color:var(--muted)">recovering lost ingredient costs</span>
+        </div>
+      </div>
+
+      <!-- Trust Score & Food Safety Guarantee -->
+      <div class="panel-card" style="margin-top:24px">
+        <h3 style="font-size:1.4rem;margin:0 0 12px">🛡️ The BachaBite Food Safety Promise</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:0 0 20px">
+          We treat food rescue with the utmost care. Here is how we ensure every meal is hygienic, fresh, and reliable:
+        </p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:18px">
+          <div style="background:#FDFBF8;border:1px solid var(--border);padding:18px;border-radius:14px">
+            <strong style="display:flex;align-items:center;gap:6px;color:var(--deep-green)">
+              <span>✅</span> 1. Strict Preparation Windows
+            </strong>
+            <p style="font-size:0.82rem;color:var(--muted);margin:8px 0 0">
+              Only food prepared during today's shift is eligible. Every listing has an explicit pickup cutoff time.
+            </p>
+          </div>
+          <div style="background:#FDFBF8;border:1px solid var(--border);padding:18px;border-radius:14px">
+            <strong style="display:flex;align-items:center;gap:6px;color:var(--deep-green)">
+              <span>✅</span> 2. FSSAI Registered Partners
+            </strong>
+            <p style="font-size:0.82rem;color:var(--muted);margin:8px 0 0">
+              Dukaans confirm items are packed safely in sterile containers, never pre-served or customer touched.
+            </p>
+          </div>
+          <div style="background:#FDFBF8;border:1px solid var(--border);padding:18px;border-radius:14px">
+            <strong style="display:flex;align-items:center;gap:6px;color:var(--deep-green)">
+              <span>✅</span> 3. OTP & QR Code Verification
+            </strong>
+            <p style="font-size:0.82rem;color:var(--muted);margin:8px 0 0">
+              Pickups are authenticated directly at the dukaan counter with a one-time 6-digit code.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <div class="mobile-nav-bottom">
+    <button class="mob-btn active" onclick="switchPage('home')">
+      <span>🥘</span> Deals
+    </button>
+    <button class="mob-btn" onclick="filterUnder99()">
+      <span>🏷️</span> Under ₹99
+    </button>
+    <button class="mob-btn" onclick="scrollToRescue()">
+      <span>🎁</span> Rescue Box
+    </button>
+    <button class="mob-btn" onclick="openOrdersModal()">
+      <span>🛍️</span> My Pickups
+    </button>
+    <button class="mob-btn" onclick="switchPage('partner')">
+      <span>🏪</span> Dukaan
+    </button>
+  </div>
+
+  <!-- MODAL 1: RESERVATION CHECKOUT MODAL -->
+  <div id="reservationModal" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('reservationModal')">×</button>
+      <div style="font-size:0.8rem;color:var(--saffron);font-weight:800;letter-spacing:0.04em">QUICK PICKUP RESERVATION</div>
+      <h2 style="margin:4px 0 10px;font-size:1.6rem" id="modalItemTitle">Reserve Meal</h2>
+      <p style="font-size:0.85rem;color:var(--muted);margin:0 0 16px" id="modalDukaanInfo">Collect from partner before deadline.</p>
+
+      <!-- Order Summary Card -->
+      <div style="background:#FDFBF8;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span id="modalSummaryItemName">Veg Meal</span>
+          <strong id="modalSummaryItemPrice">₹55</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.85rem;color:var(--muted)">
+          <span>Platform & Safety Fee</span>
+          <span id="modalFeeText">₹5</span>
+        </div>
+        <div id="modalByocDiscountRow" style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.85rem;color:var(--deep-green);font-weight:700" class="hide">
+          <span>🌱 BYOC Dabba Bonus</span>
+          <span>- ₹5</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top:1px dashed var(--border);padding-top:10px;font-weight:900;font-size:1.15rem">
+          <span>Total To Pay</span>
+          <span id="modalSummaryTotal" style="color:var(--saffron-dark)">₹60</span>
+        </div>
+      </div>
+
+      <!-- Perks Toggles in Checkout -->
+      <div style="background:#ECFDF5;border:1.5px solid #A7F3D0;border-radius:14px;padding:12px;margin-bottom:16px">
+        <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
+          <input type="checkbox" id="byocCheckbox" onchange="toggleByocOption()" style="margin-top:3px;accent-color:var(--deep-green)" />
+          <div style="font-size:0.84rem;color:#064E3B">
+            <strong>Bring your own Dabba / Container</strong>
+            <div style="font-size:0.76rem;color:#047857">Save ₹5 platform fee & receive +25 Bachat Coins!</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- Group Pickup Option -->
+      <div style="background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:14px;padding:12px;margin-bottom:18px">
+        <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
+          <input type="checkbox" id="groupPickupCheckbox" style="margin-top:3px;accent-color:var(--turmeric)" />
+          <div style="font-size:0.84rem;color:#78350F">
+            <strong>Group Pickup with Friends?</strong>
+            <div style="font-size:0.76rem;color:#92400E">One person can show code to collect multiple items together.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- Payment Choice -->
+      <div style="margin-bottom:18px">
+        <label style="display:block;font-size:0.8rem;font-weight:750;color:var(--ink-soft);margin-bottom:8px">Payment Method</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <label style="border:1.5px solid var(--border);border-radius:10px;padding:10px;display:flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:700;cursor:pointer;background:#FFF" id="payUpiLabel">
+            <input type="radio" name="payType" value="upi" checked style="accent-color:var(--saffron)" />
+            <span>⚡ Instant UPI</span>
+          </label>
+          <label style="border:1.5px solid var(--border);border-radius:10px;padding:10px;display:flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:700;cursor:pointer;background:#FFF" id="payCashLabel">
+            <input type="radio" name="payType" value="cash" style="accent-color:var(--saffron)" />
+            <span>💵 Cash at Dukaan</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="btn-3d" style="width:100%" onclick="confirmReservationFinal()">
+        ✅ Confirm & Get Pickup Code
+      </button>
+
+      <p style="text-align:center;font-size:0.75rem;color:var(--muted);margin:12px 0 0">
+        Demo Prototype · Zero actual money charged · Reserving genuine food rescue.
+      </p>
+    </div>
+  </div>
+
+  <!-- MODAL 2: RESERVATION CONFIRMED TICKET MODAL -->
+  <div id="confirmedModal" class="modal-backdrop">
+    <div class="modal-box" style="text-align:center">
+      <button class="modal-close-btn" onclick="closeModal('confirmedModal')">×</button>
+      <div style="font-size:2.8rem;margin-bottom:8px">🎉</div>
+      <h2 style="margin:0 0 6px;font-size:1.6rem">Meal Reserved!</h2>
+      <p style="font-size:0.86rem;color:var(--muted);margin:0 0 14px">
+        “One less meal in the bin, one happier you.”
+      </p>
+
+      <!-- 3D Ticket Box -->
+      <div class="ticket-3d">
+        <div style="font-size:0.75rem;font-weight:800;letter-spacing:0.06em;color:var(--saffron)">SHOW THIS PICKUP OTP AT COUNTER</div>
+        <div class="pickup-code-display" id="confirmedCodeDisplay">734 912</div>
+        
+        <!-- SVG QR Code Generator -->
+        <div class="qr-container">
+          <svg class="qr-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" fill="white"/>
+            <!-- Outer Markers -->
+            <rect x="5" y="5" width="30" height="30" rx="4" fill="#22150C"/>
+            <rect x="10" y="10" width="20" height="20" fill="white"/>
+            <rect x="15" y="15" width="10" height="10" fill="#E85D04"/>
+
+            <rect x="65" y="5" width="30" height="30" rx="4" fill="#22150C"/>
+            <rect x="70" y="10" width="20" height="20" fill="white"/>
+            <rect x="75" y="15" width="10" height="10" fill="#E85D04"/>
+
+            <rect x="5" y="65" width="30" height="30" rx="4" fill="#22150C"/>
+            <rect x="10" y="70" width="20" height="20" fill="white"/>
+            <rect x="15" y="75" width="10" height="10" fill="#E85D04"/>
+
+            <!-- Pattern Blocks -->
+            <rect x="42" y="10" width="8" height="8" fill="#22150C"/>
+            <rect x="42" y="24" width="8" height="14" fill="#22150C"/>
+            <rect x="15" y="42" width="12" height="8" fill="#22150C"/>
+            <rect x="35" y="45" width="30" height="10" fill="#E85D04"/>
+            <rect x="45" y="65" width="10" height="20" fill="#22150C"/>
+            <rect x="65" y="45" width="12" height="12" fill="#22150C"/>
+            <rect x="70" y="65" width="18" height="8" fill="#22150C"/>
+            <rect x="80" y="80" width="12" height="12" fill="#E85D04"/>
+          </svg>
+        </div>
+
+        <div style="font-size:0.85rem;font-weight:750;color:var(--ink)" id="confirmedItemSummary">Veg Sandwich Box at Campus Canteen</div>
+        <div style="font-size:0.8rem;color:#B91C1C;font-weight:800;margin-top:4px" id="confirmedTimeSummary">Pickup before 9:15 PM</div>
+      </div>
+
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-bottom:18px;font-size:0.84rem;color:#92400E">
+        🪙 <strong>Bachat Reward:</strong> You earned <strong id="earnedCoinsText">+10 Bachat Coins</strong>!
+      </div>
+
+      <div style="display:flex;gap:10px">
+        <button class="btn-3d secondary" style="flex:1" onclick="sharePickupOnWhatsApp()">
+          📲 WhatsApp Slip
+        </button>
+        <button class="btn-3d green" style="flex:1" onclick="closeModal('confirmedModal')">
+          Done, Shukriya!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: MY ACTIVE PICKUPS DRAWER -->
+  <div id="ordersModal" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('ordersModal')">×</button>
+      <h2 style="font-size:1.5rem;margin:0 0 6px">🛍️ My Active Pickups</h2>
+      <p style="font-size:0.85rem;color:var(--muted);margin:0 0 16px">Show these codes when you arrive at the food counter.</p>
+
+      <div id="ordersListContainer"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: BACHAT POINTS & REWARDS MODAL -->
+  <div id="pointsModal" class="modal-backdrop">
+    <div class="modal-box" style="text-align:center">
+      <button class="modal-close-btn" onclick="closeModal('pointsModal')">×</button>
+      <div class="coin-3d" style="width:54px;height:54px;font-size:26px;margin-bottom:12px">
+        <div class="coin-face" style="font-size:24px">₹</div>
+        <div class="coin-face coin-back" style="font-size:24px">★</div>
+      </div>
+      <h2 style="margin:0 0 4px;font-size:1.6rem">Bachat Loyalty Club</h2>
+      <p style="font-size:0.85rem;color:var(--muted);margin:0 0 16px">
+        Save food, earn coins, unlock real food discounts.
+      </p>
+
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:18px">
+        <div style="font-size:0.8rem;color:var(--muted);font-weight:700">YOUR TOTAL BALANCE</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#B45309;font-family:'Outfit'" id="modalBigCoinCount">120</div>
+        <div style="font-size:0.85rem;color:var(--deep-green);font-weight:800">Worth ₹24 in instant discounts</div>
+      </div>
+
+      <div style="text-align:left;font-size:0.84rem;margin-bottom:18px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+          <span>🍱 Every pickup collected</span>
+          <strong>+10 Coins</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+          <span>🥣 Bring Your Own Dabba (BYOC)</span>
+          <strong style="color:var(--deep-green)">+25 Coins</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+          <span>👥 Refer a college buddy</span>
+          <strong>+50 Coins</strong>
+        </div>
+      </div>
+
+      <button class="btn-3d" style="width:100%" onclick="closeModal('pointsModal');showToast('✨ Applied 50 coins for ₹10 off on your next order!')">
+        Redeem 50 Coins for ₹10 Off
+      </button>
+    </div>
+  </div>
+
+  <!-- Global Floating Toast Message -->
+  <div id="toastBox" class="toast-box">
+    <span id="toastIcon">✨</span>
+    <span id="toastText">Notification message</span>
+  </div>
+
+  <!-- Footer -->
+  <footer style="max-width:1240px;margin:40px auto 0;padding:24px max(4vw,20px);border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px">
+    <div>
+      <strong>BachaBite Prototype</strong> · Save food. Save money. · <em>“Bhookh bhi, bachat bhi.”</em>
+    </div>
+    <div>
+      A college project to help reduce food waste.
+    </div>
+  </footer>
+
+  <!-- Application Logic & Data -->
+  <script>
+    // Initial Curated Indian Food Rescue Catalog
+    const initialFoods = [
+      {
+        id: 1,
+        name: 'Samosa & Masala Chai Box (4 pcs)',
+        partner: 'Chai Shai & Bakery',
+        dukaanRating: '4.9 ★',
+        type: 'veg',
+        pref: 'veg',
+        spicy: true,
+        jain: false,
+        img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
+        original: 120,
+        price: 49,
+        qty: 4,
+        time: '7:45 PM',
+        mins: 22,
+        distance: '0.3 km',
+        quote: 'Samosa saved is happiness earned.'
+      },
+      {
+        id: 2,
+        name: 'Hyderabadi Dum Biryani Bowl',
+        partner: 'Royal Dum Biryani',
+        dukaanRating: '4.8 ★',
+        type: 'nonveg',
+        pref: 'nonveg',
+        spicy: true,
+        jain: false,
+        img: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+        original: 260,
+        price: 119,
+        qty: 3,
+        time: '8:30 PM',
+        mins: 45,
+        distance: '0.8 km',
+        quote: 'This deal has a short shelf life—grab it!'
+      },
+      {
+        id: 3,
+        name: 'Crispy Masala Dosa + Sambar',
+        partner: 'Madras Tiffin Center',
+        dukaanRating: '4.7 ★',
+        type: 'veg',
+        pref: 'veg',
+        spicy: false,
+        jain: true,
+        img: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80',
+        original: 140,
+        price: 59,
+        qty: 5,
+        time: '9:00 PM',
+        mins: 65,
+        distance: '1.1 km',
+        quote: 'Too tasty to waste.'
+      },
+      {
+        id: 4,
+        name: 'Paneer Tikka Butter Roll',
+        partner: 'Campus Central Canteen',
+        dukaanRating: '4.9 ★',
+        type: 'veg',
+        pref: 'veg',
+        spicy: true,
+        jain: false,
+        img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
+        original: 160,
+        price: 79,
+        qty: 6,
+        time: '8:15 PM',
+        mins: 30,
+        distance: '0.2 km',
+        quote: 'Your late-night hunger just found a budget.'
+      },
+      {
+        id: 5,
+        name: 'Butter Croissant & Pastry Box (3 pcs)',
+        partner: 'The Daily Bake House',
+        dukaanRating: '4.8 ★',
+        type: 'bakery',
+        pref: 'bakery',
+        spicy: false,
+        jain: false,
+        img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
+        original: 210,
+        price: 89,
+        qty: 2,
+        time: '8:00 PM',
+        mins: 15,
+        distance: '1.4 km',
+        quote: 'Freshly baked at 4 PM, yours at 8 PM!'
+      },
+      {
+        id: 6,
+        name: 'Deluxe North Indian Mini Thali',
+        partner: 'Amritsari Kulcha Corner',
+        dukaanRating: '4.8 ★',
+        type: 'veg',
+        pref: 'veg',
+        spicy: false,
+        jain: true,
+        img: 'https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80',
+        original: 220,
+        price: 95,
+        qty: 5,
+        time: '9:30 PM',
+        mins: 85,
+        distance: '0.6 km',
+        quote: 'Paisa vasool, wholesome food rescue.'
+      },
+      {
+        id: 7,
+        name: 'Steamed Veg Momos (8 pcs + Dip)',
+        partner: 'Tibetan Corner',
+        dukaanRating: '4.6 ★',
+        type: 'veg',
+        pref: 'veg',
+        spicy: true,
+        jain: false,
+        img: 'https://images.unsplash.com/photo-1625398407796-82650a8c135f?auto=format&fit=crop&w=800&q=80',
+        original: 130,
+        price: 55,
+        qty: 4,
+        time: '8:45 PM',
+        mins: 50,
+        distance: '1.0 km',
+        quote: 'Your wallet and planet both approve.'
+      },
+      {
+        id: 8,
+        name: 'Double Cheese Margherita Slice (2)',
+        partner: 'Slice & Dice Pizza',
+        dukaanRating: '4.7 ★',
+        type: 'veg',
+        pref: 'veg',
+        spicy: false,
+        jain: false,
+        img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+        original: 180,
+        price: 85,
+        qty: 3,
+        time: '9:15 PM',
+        mins: 70,
+        distance: '1.8 km',
+        quote: 'Dinner plans, sorted.'
+      }
+    ];
+
+    // State
+    let foods = JSON.parse(localStorage.getItem('bachat_foods')) || initialFoods;
+    let reservations = JSON.parse(localStorage.getItem('bachat_reservations')) || [];
+    let followedDukaans = JSON.parse(localStorage.getItem('bachat_followed')) || [];
+    let bachatPoints = Number(localStorage.getItem('bachat_points')) || 120;
+    let currentPref = 'all';
+    let selectedFoodForModal = null;
+    let isByocActive = false;
+
+    // Save to LocalStorage
+    function syncStorage() {
+      localStorage.setItem('bachat_foods', JSON.stringify(foods));
+      localStorage.setItem('bachat_reservations', JSON.stringify(reservations));
+      localStorage.setItem('bachat_followed', JSON.stringify(followedDukaans));
+      localStorage.setItem('bachat_points', bachatPoints.toString());
+      updateCounters();
+    }
+
+    // Update Header counters
+    function updateCounters() {
+      document.getElementById('headerCoinCount').textContent = bachatPoints;
+      document.getElementById('modalBigCoinCount').textContent = bachatPoints;
+      document.getElementById('orderCountBadge').textContent = reservations.length;
+    }
+
+    // Render Cards in Marketplace
+    function filterAndRenderCards() {
+      const search = (document.getElementById('searchInput').value || '').toLowerCase();
+      const priceFilter = document.getElementById('priceSelect').value;
+      const sortVal = document.getElementById('sortSelect').value;
+
+      let list = foods.filter(item => {
+        // Search match
+        const matchSearch = (`${item.name} ${item.partner} ${item.type}`).toLowerCase().includes(search);
+        
+        // Price match
+        const matchPrice = priceFilter === 'all' || item.price <= Number(priceFilter);
+
+        // Preference match
+        let matchPref = true;
+        if (currentPref === 'under99') matchPref = item.price <= 99;
+        else if (currentPref === 'veg') matchPref = item.type === 'veg' || item.pref === 'veg';
+        else if (currentPref === 'nonveg') matchPref = item.type === 'nonveg' || item.pref === 'nonveg';
+        else if (currentPref === 'bakery') matchPref = item.type === 'bakery' || item.pref === 'bakery';
+        else if (currentPref === 'jain') matchPref = !!item.jain;
+        else if (currentPref === 'spicy') matchPref = !!item.spicy;
+
+        return matchSearch && matchPrice && matchPref;
+      });
+
+      // Sorting
+      list.sort((a, b) => {
+        if (sortVal === 'saving') {
+          return (b.original - b.price) - (a.original - a.price);
+        } else if (sortVal === 'low') {
+          return a.price - b.price;
+        } else if (sortVal === 'time') {
+          return a.mins - b.mins;
+        } else {
+          return parseFloat(a.distance) - parseFloat(b.distance);
+        }
+      });
+
+      const container = document.getElementById('foodCardsGrid');
+      if (!list.length) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1;background:#FFF;border:2px dashed var(--border);border-radius:20px;padding:48px 20px;text-align:center">
+            <div style="font-size:3rem;margin-bottom:10px">🍲</div>
+            <h3 style="margin:0 0 6px">No surplus meals match these filters</h3>
+            <p style="color:var(--muted);font-size:0.9rem;margin:0 0 16px">Try clearing filters or check back at 7 PM for the new drop!</p>
+            <button class="btn-3d" onclick="resetFilters()">Reset All Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(f => {
+        const savings = f.original - f.price;
+        const discountPercent = Math.round((savings / f.original) * 100);
+        const isFav = followedDukaans.includes(f.partner);
+        const isSoldOut = f.qty <= 0;
+
+        return `
+          <article class="food-card" id="card-${f.id}">
+            <div class="card-media">
+              <img src="${f.img}" alt="${f.name}" loading="lazy" />
+              <div class="badge-bhookh">
+                <span>${f.type === 'nonveg' ? '🔴 Non-Veg' : f.type === 'bakery' ? '🥐 Bakery' : '🟢 Pure Veg'}</span>
+              </div>
+              <div class="badge-discount-3d">
+                ${discountPercent}% OFF
+              </div>
+              <button class="fav-heart-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${f.partner}', this)" title="Follow ${f.partner}">
+                ${isFav ? '❤️' : '🤍'}
+              </button>
+            </div>
+
+            <div class="card-content">
+              <div class="dukaan-row">
+                <span class="dukaan-name">🏪 ${f.partner}</span>
+                <span class="rating-badge">${f.dukaanRating || '4.8 ★'}</span>
+              </div>
+
+              <h3 class="item-title">${f.name}</h3>
+
+              <div class="item-quote">“${f.quote || 'Paisa vasool, food rescue.'}”</div>
+
+              <div class="price-savings-box">
+                <div>
+                  <span class="price-current">₹${f.price}</span>
+                  <span class="price-original">₹${f.original}</span>
+                </div>
+                <div class="savings-badge">
+                  Aapne ₹${savings} bachaye!
+                </div>
+              </div>
+
+              <div class="card-meta">
+                <span>📦 ${isSoldOut ? '<span style="color:#B91C1C;font-weight:800">SOLD OUT</span>' : f.qty + ' left · ' + f.distance}</span>
+                <span class="pickup-timer">⏰ By ${f.time}</span>
+              </div>
+
+              <div class="card-actions">
+                ${isSoldOut ? 
+                  `<button class="btn-3d secondary" disabled style="opacity:0.6;cursor:not-allowed">Sold Out Today</button>` :
+                  `<button class="btn-3d" onclick="openReservationModal(${f.id})">Reserve Meal</button>`
+                }
+                <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(`Bhai dekh! ${f.name} is ₹${f.price} (was ₹${f.original}) at ${f.partner} on BachaBite. Check it out before it sells out!`)}" target="_blank" class="whatsapp-btn" title="Share with college friends on WhatsApp">
+                  💬
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // Set Preference Filter
+    function setPreference(pref, btnEl) {
+      currentPref = pref;
+      document.querySelectorAll('.preference-scroll .chip').forEach(c => c.classList.remove('active'));
+      btnEl.classList.add('active');
+      filterAndRenderCards();
+    }
+
+    function filterUnder99() {
+      switchPage('home');
+      const under99Chip = document.querySelector('[data-pref="under99"]');
+      if (under99Chip) setPreference('under99', under99Chip);
+      document.getElementById('dealsFilterSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToDeals() {
+      switchPage('home');
+      document.getElementById('aajKaDealHead').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToRescue() {
+      switchPage('home');
+      document.getElementById('rescueBoxSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('priceSelect').value = 'all';
+      document.getElementById('sortSelect').value = 'near';
+      const allChip = document.querySelector('[data-pref="all"]');
+      if (allChip) setPreference('all', allChip);
+    }
+
+    // Reservation Modal Flow
+    function openReservationModal(foodId) {
+      selectedFoodForModal = foods.find(f => f.id === foodId);
+      if (!selectedFoodForModal || selectedFoodForModal.qty <= 0) {
+        showToast('Sorry, this deal is already sold out!');
+        return;
+      }
+
+      isByocActive = false;
+      document.getElementById('byocCheckbox').checked = false;
+      document.getElementById('modalByocDiscountRow').classList.add('hide');
+
+      document.getElementById('modalItemTitle').textContent = `Reserve ${selectedFoodForModal.name}`;
+      document.getElementById('modalDukaanInfo').textContent = `Collect directly from ${selectedFoodForModal.partner} before ${selectedFoodForModal.time}.`;
+      document.getElementById('modalSummaryItemName').textContent = selectedFoodForModal.name;
+      document.getElementById('modalSummaryItemPrice').textContent = `₹${selectedFoodForModal.price}`;
+      
+      calculateCheckoutTotal();
+      openModal('reservationModal');
+    }
+
+    function reserveCustomBox(boxName, partnerName, price, original, emoji) {
+      selectedFoodForModal = {
+        id: Date.now(),
+        name: boxName,
+        partner: partnerName,
+        price: price,
+        original: original,
+        time: '9:30 PM',
+        mins: 60,
+        qty: 1
+      };
+      isByocActive = false;
+      document.getElementById('byocCheckbox').checked = false;
+      document.getElementById('modalByocDiscountRow').classList.add('hide');
+
+      document.getElementById('modalItemTitle').textContent = `Reserve ${boxName}`;
+      document.getElementById('modalDukaanInfo').textContent = `Packed fresh today by ${partnerName}. Collect before 9:30 PM.`;
+      document.getElementById('modalSummaryItemName').textContent = boxName;
+      document.getElementById('modalSummaryItemPrice').textContent = `₹${price}`;
+
+      calculateCheckoutTotal();
+      openModal('reservationModal');
+    }
+
+    function toggleByocOption() {
+      isByocActive = document.getElementById('byocCheckbox').checked;
+      const discountRow = document.getElementById('modalByocDiscountRow');
+      if (isByocActive) {
+        discountRow.classList.remove('hide');
+        showToast('🥣 BYOC Selected! ₹5 platform fee waived + 25 Bachat Coins rewarded!');
+      } else {
+        discountRow.classList.add('hide');
+      }
+      calculateCheckoutTotal();
+    }
+
+    function calculateCheckoutTotal() {
+      const basePrice = selectedFoodForModal ? selectedFoodForModal.price : 0;
+      const fee = isByocActive ? 0 : 5;
+      const total = basePrice + fee;
+      document.getElementById('modalFeeText').textContent = isByocActive ? '₹0 (BYOC waived)' : '₹5';
+      document.getElementById('modalSummaryTotal').textContent = `₹${total}`;
+    }
+
+    function confirmReservationFinal() {
+      if (!selectedFoodForModal) return;
+
+      // Decrement stock if in catalog
+      const catalogItem = foods.find(f => f.id === selectedFoodForModal.id);
+      if (catalogItem && catalogItem.qty > 0) {
+        catalogItem.qty -= 1;
+      }
+
+      // Generate 6 digit secret pickup code
+      const pickupOtp = Math.floor(100000 + Math.random() * 900000).toString().replace(/(\d{3})(\d{3})/, '$1 $2');
+      
+      // Calculate reward coins
+      const coinsEarned = isByocActive ? 35 : 10;
+      bachatPoints += coinsEarned;
+
+      // Record reservation
+      const newOrder = {
+        orderId: 'BB-' + Math.floor(10000 + Math.random() * 90000),
+        code: pickupOtp,
+        itemName: selectedFoodForModal.name,
+        partner: selectedFoodForModal.partner,
+        price: selectedFoodForModal.price,
+        time: selectedFoodForModal.time,
+        byoc: isByocActive,
+        isGroup: document.getElementById('groupPickupCheckbox').checked,
+        createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      reservations.unshift(newOrder);
+      syncStorage();
+      filterAndRenderCards();
+      renderPartnerListings();
+
+      closeModal('reservationModal');
+
+      // Populate confirmation modal
+      document.getElementById('confirmedCodeDisplay').textContent = pickupOtp;
+      document.getElementById('confirmedItemSummary').textContent = `${newOrder.itemName} at ${newOrder.partner}`;
+      document.getElementById('confirmedTimeSummary').textContent = `Pickup before ${newOrder.time}`;
+      document.getElementById('earnedCoinsText').textContent = `+${coinsEarned} Bachat Coins`;
+
+      openModal('confirmedModal');
+      showToast('🎉 Meal reserved successfully! Show your code at the counter.');
+    }
+
+    function sharePickupOnWhatsApp() {
+      if (!reservations.length) return;
+      const o = reservations[0];
+      const text = `Hey! I reserved ${o.itemName} at ${o.partner} on BachaBite. Pickup OTP: *${o.code}* before ${o.time}.`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // My Orders Drawer
+    function openOrdersModal() {
+      const container = document.getElementById('ordersListContainer');
+      if (!reservations.length) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:32px 10px;background:#FDFBF8;border-radius:18px;border:1px dashed var(--border)">
+            <div style="font-size:2.8rem;margin-bottom:8px">🛍️</div>
+            <strong style="display:block;margin-bottom:4px">No active pickups right now</strong>
+            <p style="color:var(--muted);font-size:0.84rem;margin:0 0 14px">Reserve delicious surplus meals before they go to waste.</p>
+            <button class="btn-3d" onclick="closeModal('ordersModal');switchPage('home')">Browse Deals</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = reservations.map((o, idx) => `
+          <div style="background:#FFF;border:1.5px solid #FCD34D;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 4px 12px rgba(245,158,11,0.1)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span class="savings-badge">● Ready for Pickup</span>
+              <span style="font-size:0.75rem;color:var(--muted)">Order #${o.orderId}</span>
+            </div>
+            <h4 style="margin:0 0 4px;font-size:1.1rem">${o.itemName}</h4>
+            <div style="font-size:0.82rem;color:var(--ink-soft);margin-bottom:10px">🏪 ${o.partner} · Collect by <strong>${o.time}</strong></div>
+            
+            <div style="background:#FEF3C7;border-radius:10px;padding:10px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <span style="font-size:0.7rem;text-transform:uppercase;color:#92400E;font-weight:800">PICKUP OTP CODE</span>
+                <div style="font-size:1.3rem;font-weight:900;letter-spacing:2px;color:#78350F">${o.code}</div>
+              </div>
+              <button class="btn-3d green" style="padding:6px 12px;font-size:0.78rem" onclick="markOrderCollected(${idx})">
+                Collected ✓
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+      openModal('ordersModal');
+    }
+
+    function markOrderCollected(idx) {
+      reservations.splice(idx, 1);
+      syncStorage();
+      openOrdersModal();
+      showToast('Pickup verified! Shukriya for rescuing food! 🍲');
+    }
+
+    function openPointsModal() {
+      openModal('pointsModal');
+    }
+
+    // Modal helpers
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+    document.querySelectorAll('.modal-backdrop').forEach(m => {
+      m.addEventListener('click', e => {
+        if (e.target === m) m.classList.remove('open');
+      });
+    });
+
+    // Page Switching (Home / Partner / Impact)
+    function switchPage(pageKey) {
+      document.querySelectorAll('.page-section').forEach(p => p.classList.add('hide'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+
+      if (pageKey === 'home') {
+        document.getElementById('homePage').classList.remove('hide');
+        document.querySelector('.nav-btn[data-page="home"]')?.classList.add('active');
+      } else if (pageKey === 'partner') {
+        document.getElementById('partnerPage').classList.remove('hide');
+        document.querySelector('.nav-btn[data-page="partner"]')?.classList.add('active');
+        renderPartnerListings();
+      } else if (pageKey === 'impact') {
+        document.getElementById('impactPage').classList.remove('hide');
+        document.querySelector('.nav-btn[data-page="impact"]')?.classList.add('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Partner Listing Submission
+    function handlePartnerSubmit(e) {
+      e.preventDefault();
+      const pName = document.getElementById('pName').value;
+      const pType = document.getElementById('pType').value;
+      const pQty = Number(document.getElementById('pQty').value);
+      const pTimeRaw = document.getElementById('pTime').value;
+      const pOrig = Number(document.getElementById('pOrig').value);
+      const pPrice = Number(document.getElementById('pPrice').value);
+      const imgChoice = document.getElementById('pImageChoice').value;
+
+      const imgMap = {
+        samosa: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
+        biryani: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+        dosa: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80',
+        roll: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
+        bakery: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
+        thali: 'https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80',
+        pizza: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80'
+      };
+
+      const newItem = {
+        id: Date.now(),
+        name: pName,
+        partner: 'Your Dukaan (Civil Lines)',
+        dukaanRating: '5.0 ★',
+        type: pType,
+        pref: pType,
+        spicy: pType === 'spicy',
+        jain: pType === 'jain',
+        img: imgMap[imgChoice] || imgMap.thali,
+        original: pOrig,
+        price: pPrice,
+        qty: pQty,
+        time: formatTimeToAmPm(pTimeRaw),
+        mins: 60,
+        distance: '0.1 km',
+        quote: 'Freshly packed. Financially friendly.'
+      };
+
+      foods.unshift(newItem);
+      syncStorage();
+      renderPartnerListings();
+      filterAndRenderCards();
+      e.target.reset();
+      showToast('🎉 Your surplus food listing is now LIVE across BachaBite!');
+    }
+
+    function formatTimeToAmPm(timeStr) {
+      if (!timeStr) return '9:30 PM';
+      const [h, m] = timeStr.split(':');
+      const hour = Number(h);
+      const suffix = hour >= 12 ? 'PM' : 'AM';
+      const formattedH = ((hour + 11) % 12 + 1);
+      return `${formattedH}:${m} ${suffix}`;
+    }
+
+    function renderPartnerListings() {
+      const container = document.getElementById('partnerListingsList');
+      const partnerItems = foods.filter(f => f.partner.includes('Your Dukaan') || f.id > 100);
+      document.getElementById('partnerLiveCount').textContent = `${partnerItems.length} Live`;
+
+      if (!partnerItems.length) {
+        container.innerHTML = `
+          <div style="color:var(--muted);font-size:0.85rem;padding:14px;background:#FDFBF8;border-radius:10px;text-align:center">
+            No live listings yet. Fill out the quick form on the left to publish surplus!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = partnerItems.map(f => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <strong style="font-size:0.95rem;display:block">${f.name}</strong>
+            <span style="font-size:0.78rem;color:var(--muted)">${f.qty} remaining · ₹${f.price} · Pickup by ${f.time}</span>
+          </div>
+          <button class="btn-3d secondary" style="padding:5px 10px;font-size:0.75rem" onclick="deletePartnerItem(${f.id})">
+            Remove
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function deletePartnerItem(id) {
+      foods = foods.filter(f => f.id !== id);
+      syncStorage();
+      renderPartnerListings();
+      filterAndRenderCards();
+      showToast('Listing removed.');
+    }
+
+    // Follow / Favourite Dukaan
+    function toggleFav(partnerName, btnEl) {
+      if (followedDukaans.includes(partnerName)) {
+        followedDukaans = followedDukaans.filter(p => p !== partnerName);
+        btnEl.classList.remove('active');
+        btnEl.innerHTML = '🤍';
+        showToast(`Unfollowed ${partnerName}`);
+      } else {
+        followedDukaans.push(partnerName);
+        btnEl.classList.add('active');
+        btnEl.innerHTML = '❤️';
+        showToast(`❤️ Following ${partnerName}! Deal alerts enabled for their 7 PM drops.`);
+      }
+      syncStorage();
+    }
+
+    function toggleFollowDukaan(dukaanName, btnEl) {
+      if (followedDukaans.includes(dukaanName)) {
+        followedDukaans = followedDukaans.filter(p => p !== dukaanName);
+        btnEl.textContent = '❤️ Follow';
+        showToast(`Unfollowed ${dukaanName}`);
+      } else {
+        followedDukaans.push(dukaanName);
+        btnEl.textContent = '✓ Following';
+        showToast(`🔔 Alert set! You'll be notified when ${dukaanName} drops evening surplus.`);
+      }
+      syncStorage();
+    }
+
+    function toggleDropAlert() {
+      showToast('🔔 Notification scheduled for 7:00 PM Daily Saver Drops!');
+    }
+
+    // Countdown Timer simulation
+    setInterval(() => {
+      const now = new Date();
+      const target = new Date();
+      target.setHours(19, 0, 0, 0); // 7:00 PM
+      if (now > target) target.setDate(target.getDate() + 1);
+
+      const diff = Math.floor((target - now) / 1000);
+      const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+      const s = String(diff % 60).padStart(2, '0');
+
+      const elH = document.getElementById('dropHrs');
+      const elM = document.getElementById('dropMins');
+      const elS = document.getElementById('dropSecs');
+      if (elH) elH.textContent = h;
+      if (elM) elM.textContent = m;
+      if (elS) elS.textContent = s;
+    }, 1000);
+
+    // Toast Function
+    let toastTimeout = null;
+    function showToast(msg) {
+      const t = document.getElementById('toastBox');
+      document.getElementById('toastText').textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        t.classList.remove('show');
+      }, 3200);
+    }
+
+    // Initial render
+    filterAndRenderCards();
+    updateCounters();
+  </script>
+</body>
+</html>
